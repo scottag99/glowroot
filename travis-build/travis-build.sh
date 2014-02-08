@@ -19,9 +19,11 @@ case "$1" in
                # harnesses is done elsewhere in the build
                if [[ "$TRAVIS_REPO_SLUG" == "glowroot/glowroot" && "$TRAVIS_BRANCH" == "master" ]]
                then
-                 # deploy unshaded artifacts to maven repository
+                 # deploy unshaded artifacts to maven repository (with no embedded third party
+                 # libraries, including no third party javascript libraries)
                  mvn clean deploy -DdeployAtEnd=true \
                                   -Dglowroot.shading.skip=true \
+                                  -Dglowroot.ui.skip=true \
                                   -Dglowroot.test.harness=local \
                                   -Dglowroot.build.commit=$TRAVIS_COMMIT \
                                   --settings travis-build/settings.xml \
